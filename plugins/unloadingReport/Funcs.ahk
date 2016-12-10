@@ -59,7 +59,7 @@ class UnloadingReport
     Return
   }
 
-  unloadingReportChecker(MessageString)
+  unloadingReportChatlogChecker(MessageString)
   {
     if (SubStr(MessageString, 1, 10) = " На складе") && (InStr(MessageString, ":") > 0) {
       WarehouseName := SubStr(MessageString, 12)
@@ -136,7 +136,7 @@ UnloadingReport := new UnloadingReport()
 
 UnloadingReportChatlogChecker(ChatlogString)
 {
-  UnloadingReport.unloadingReportChecker(ChatlogString)
+  UnloadingReport.unloadingReportChatlogChecker(ChatlogString)
 }
 
 Chatlog.checker.Insert("UnloadingReportChatlogChecker")

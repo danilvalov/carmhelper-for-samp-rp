@@ -86,7 +86,7 @@ class Monitoring
 
       if (FactionKeyword <> "" && FactionName <> "") {
         if (InStr(this.__strToLower(MessageString), FactionKeyword) > 0) {
-          if ((InStr(this.__strToLower(MessageString), "код") == 0 && InStr(this.__strToLower(MessageString), "жетон") == 0 && (this.checkRadioMessage(MessageString) || SubStr(MessageString, 1, 2) == "- ") || SubStr(MessageString, 1, 4) == "SMS:" || InStr(MessageString, " шепнул(а): ") > 0)) {
+          if ((InStr(this.__strToLower(MessageString), "код") == 0 && InStr(this.__strToLower(MessageString), "жетон") == 0 && (this.checkRadioMessage(MessageString) || SubStr(MessageString, 1, 2) == "- ") || SubStr(MessageString, 1, 5) == " SMS:" || InStr(MessageString, " шепнул(а): ") > 0)) {
             if (this.checkRadioMessage(MessageString))
               MessageString := Trim(SubStr(MessageString, InStr(MessageString, ":") + 2))
             if (InStr(this.__strToLower(MessageString), "мониторинг") <> 0)
@@ -97,8 +97,8 @@ class Monitoring
               MessageString := SubStr(MessageString, 3, StrLen(MessageString))
             if (InStr(MessageString, " шепнул(а): ") > 0)
               MessageString := SubStr(MessageString, InStr(MessageString, ": ") + 1)
-            if (SubStr(MessageString, 1, 4) = "SMS:") {
-              MessageString := SubStr(MessageString, 6)
+            if (SubStr(MessageString, 1, 5) = " SMS:") {
+              MessageString := SubStr(MessageString, 7)
               MessageString := SubStr(MessageString, 1, InStr(MessageString, "Отправитель") - 3)
             }
 
