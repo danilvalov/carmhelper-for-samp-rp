@@ -72,6 +72,8 @@ class Monitoring
 
   clear(Data)
   {
+    Chatlog.reader()
+
     this._factionsWarehousesStatus := {}
 
     Return
@@ -173,6 +175,10 @@ class Monitoring
     Message := StrReplace(Message, "%FBI%", FBI)
     Message := StrReplace(Message, "%SFA%", SFA)
 
+    if (!IsSending) {
+      addMessageToChatWindow("{FFFF00}Данные по складам не найдены в чате. Но вы можете ввести их вручную:")
+    }
+
     sendChatSavingMessage(Message, IsSending)
 
     Return
@@ -202,5 +208,6 @@ MonitoringChatlogChecker(ChatlogString)
 Chatlog.checker.Insert("MonitoringChatlogChecker")
 
 HotKeyRegister(Config["plugins"]["Monitoring"]["Key"], "MonitoringHotKey")
+HotKeyRegister(Config["plugins"]["Monitoring"]["ClearKey"], "MonitoringClearHotKey")
 
 Monitoring.init()

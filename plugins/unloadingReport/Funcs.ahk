@@ -13,6 +13,7 @@ class UnloadingReport
   _warehouseName := ""
   _warehouseCargo := 0
   _remainingCargo := 0
+  _tmpRemainingCargo := 0
 
   _generateNameDec(NumStr, OneItemName, TwoItemName, FiveItemName)
   {
@@ -61,7 +62,13 @@ class UnloadingReport
 
   unloadingReportChatlogChecker(MessageString)
   {
-    if (SubStr(MessageString, 1, 10) = " На складе") && (InStr(MessageString, ":") > 0) {
+    if (SubStr(MessageString, 1, 12) = " Материалов:") {
+      RemainingCargo := SubStr(MessageString, InStr(MessageString, ":") + 2)
+      RemainingCargo := SubStr(RemainingCargo, 1, InStr(RemainingCargo, "/") - 1)
+      RemainingCargo := Round(RemainingCargo / 1000)
+
+      this._tmpRemainingCargo := RemainingCargo
+    } else if (SubStr(MessageString, 1, 10) = " На складе") && (InStr(MessageString, ":") > 0) {
       WarehouseName := SubStr(MessageString, 12)
       WarehouseName := SubStr(WarehouseName, 1, InStr(WarehouseName, ":") - 1)
       WarehouseCargo := SubStr(MessageString, InStr(MessageString, ":") + 2)
@@ -70,12 +77,9 @@ class UnloadingReport
 
       this._warehouseName := WarehouseName
       this._warehouseCargo := WarehouseCargo
-    } else if (SubStr(MessageString, 1, 12) = " Материалов:") {
-      RemainingCargo := SubStr(MessageString, InStr(MessageString, ":") + 2)
-      RemainingCargo := SubStr(RemainingCargo, 1, InStr(RemainingCargo, "/") - 1)
-      RemainingCargo := Round(RemainingCargo / 1000)
-
-      this._remainingCargo := RemainingCargo
+      this._remainingCargo := this._tmpRemainingCargo
+    } else {
+      this._tmpRemainingCargo := 0
     }
   }
 
@@ -117,7 +121,7 @@ class UnloadingReport
 
       sendChatSavingMessage(Message, IsSending)
     } else {
-      sendChatSavingMessage("Нет данных по складам", False)
+      addMessageToChatWindow("{FFFF00}Данные о складе, на котором вы разгружались, не найдены в чате.")
     }
 
     Return

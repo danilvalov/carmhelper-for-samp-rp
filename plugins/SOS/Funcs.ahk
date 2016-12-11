@@ -50,6 +50,8 @@ class SOS
     if (IsSending) {
       sendChatMessage(Message)
     } else {
+      addMessageToChatWindow("{FFFF00}Данные о вашем местонахождении не найдены. Но вы можете ввести их вручную:")
+
       sendChatSavingMessage(Message, False)
     }
 

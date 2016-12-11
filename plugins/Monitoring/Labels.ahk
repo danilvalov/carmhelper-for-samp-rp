@@ -9,3 +9,10 @@ MonitoringHotKey:
 
   Return
 }
+
+MonitoringClearHotKey:
+{
+  Monitoring.clear()
+
+  Return
+}
